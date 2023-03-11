@@ -2,8 +2,6 @@
 from aiogram import Bot, types
 from aiogram.utils import executor
 from aiogram.dispatcher import Dispatcher
-from aiogram.types import ReplyKeyboardRemove, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
-import asyncio
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -11,24 +9,15 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 import os
 import keyboard
 import logging
-from xmlrpc.client import DateTime
 from telethon.sync import TelegramClient
-import telethon
-from telethon.tl.functions.messages import GetDialogsRequest
-from telethon.tl.types import InputPeerEmpty
-from telethon.tl.functions.messages import GetHistoryRequest
-from telethon.tl.types import PeerChannel
-from asyncio import run
 import re
-import csv
 from datetime import datetime, timedelta, timezone
-import pytz
 import statistics
 import time
-import json
 import keep_alive
 
 keep_alive.keep_alive()
+
 
 phone = os.environ['PHONE']
 api_id = int(os.environ['API_ID'])
@@ -45,9 +34,7 @@ class UserState(StatesGroup):
   address = State()
 
 
-logging.basicConfig(
-  format=
-  u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
+logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
   level=logging.INFO,
 )
 
@@ -351,9 +338,7 @@ async def get_address(msg: types.Message, state: FSMContext):
 
         #Пробуем зайти в комменты
         try:
-          async for message in client.iter_messages(chat,
-                                                    reply_to=i,
-                                                    reverse=True):
+          async for message in client.iter_messages(chat, reply_to=i, reverse=True):
             countComOnP += 1
             if isinstance(message.sender, types.User):
               #print(message.date, message.sender.first_name, ':', message.text)
@@ -395,27 +380,71 @@ async def get_address(msg: types.Message, state: FSMContext):
           countAllReactMP) + "\n\n"
         allReactions.append(int(countAllReactMP))
 
-        #Смотрим, какой пост сейчас в цикле и сколько у него реакций
-        #postMsg = "У поста " + chat + "/" + str(i) + " всего " + str(countAllReactMP) + " реакций"
-        #await bot.send_message(msg.from_user.id, postMsg)
     try:
-      """
-      Подсчёт среднего количества просмотров на пост
-      Выдаёт меньшее значение, чем TGstat
-      Подумать, как можно получить такое же значение вручную
-      """
-      countPostsForSrViews = len(countViews)
-      print("\n\nКоличетство контентных постов: " + str(countPostsForSrViews))
-      countViewsSr = list(map(int, countViews))
-      countViewsSr = sum(countViewsSr)
-      print("Всего просмотров постов: " + str(countViewsSr))
-      viewsSr = countViewsSr // countPostsForSrViews
-      print("Среднее количество просмотров на пост: " + str(viewsSr))
+      startDate = datetime.now() - timedelta(days=30)
+      endDate = datetime.now()
+      #Присваиваем таймзону, чтобы не было проблем при сравнении с message.date
 
+      startDate = startDate.replace(hour=0, minute=0, second=0, microsecond=0)
+      endDate = endDate.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=timezone.utc)
+      prvGroupID = 0
+      countViews = []
+
+      try:
+        async for message in client.iter_messages(chat, reverse=True,offset_date=startDate):
+          if (message.date <= endDate):
+              i = message.id
+              print(i)
+              """
+              #если слова есть в посте, значит, это реклама, выпёздываемся
+              if ((ad1 in message.message) or (ad2 in message.message)
+                  or (ad3 in message.message) or (ad4 in message.message)
+                  or (ad5 in message.message) or (ad6 in message.message)):
+                print("В посте " + str(i) + " есть рекламная метка.")
+              #проверяем, есть ли у поста медиа и grouped_id, если да, дальше будет группа картинок
+                if (message.media and message.grouped_id):
+                    #если prvGroupID совпадает с айдишником поста,
+                    #значит это группа и первый пост замеряли, выходим из итерации цикла
+                    if prvGroupID == message.grouped_id:
+                      continue
+                    #если айди разные, значит это первый пост из группы, запоминаем айди
+                    else:
+                      prvGroupID = message.grouped_id
+                continue
+              """
+              #проверяем, есть ли у поста медиа и grouped_id, если да, дальше будет группа картинок
+              if (message.media and message.grouped_id):
+              #если prvGroupID совпадает с айдишником поста,
+              #значит это группа и первый пост замеряли, выходим из итерации цикла
+                if prvGroupID == message.grouped_id:
+                    continue
+                    #если айди разные, значит это первый пост из группы, запоминаем айди
+                else:
+                    prvGroupID = message.grouped_id
+
+              print("\n\nПросмотров у поста: " + str(message.views))
+              countViews.append(int(message.views))
+              print("Все просмотры, которые есть?: ")
+              print(*countViews)
+      
+          countPostsForSrViews = len(countViews)
+          print("\n\nКоличетство контентных постов: " + str(countPostsForSrViews))
+          countViewsSr = list(map(int, countViews))
+          countViewsSr = sum(countViewsSr)
+          print("Всего просмотров постов: " + str(countViewsSr))
+          viewsSr = countViewsSr // countPostsForSrViews
+          print("Среднее количество просмотров на пост: " + str(viewsSr))
+
+      except Exception as e:
+          errorMsg = "Почему-то не получилось собрать посты. Ошибка: " + str(e)
+          await bot.send_message(msg.from_user.id, errorMsg)
+          await state.finish()
+      print("Формирую финальное сообщение...")
       statPostMed = "<b>Итоговая статистика</b>\n\n" + msgJoined + "\n\n<b>(Beta) Средний охват поста: </b>" + str(
         viewsSr) + "\n\n<b>Медиана реакций: </b>" + str(
           statistics.median(allReactions))
-
+      
+      print("Обрезаю сообщения, чтобы уместились в 4096 символов...")
       # режем сообщения больше 4096 символов, телеграм больше не примет
       if len(statPost) > 4096:
         for x in range(0, len(statPost), 4096):
