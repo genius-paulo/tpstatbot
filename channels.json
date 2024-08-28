@@ -1,0 +1,155 @@
+[
+	{
+		"id": 1,
+		"channel_username": "tproger_official",
+		"channel_title": "Типичный программист"
+	},
+	{
+		"id": 2,
+		"channel_username": "ithumor",
+		"channel_title": "IT Юмор"
+	},
+	{
+		"id": 3,
+		"channel_username": "your_tech",
+		"channel_title": "Представляешь"
+	},
+	{
+		"id": 4,
+		"channel_username": "tproger_web",
+		"channel_title": "Веб-страница"
+	},
+	{
+		"id": 5,
+		"channel_username": "zen_of_python",
+		"channel_title": "Zen of Python"
+	},
+	{
+		"id": 6,
+		"channel_username": "mobi_dev",
+		"channel_title": "Мобильная разработка"
+	},
+	{
+		"id": 7,
+		"channel_username": "prog_point",
+		"channel_title": "Точка входа в программировани"
+	},
+	{
+		"id": 8,
+		"channel_username": "make_game",
+		"channel_title": "GameDev: разработка игр"
+	},
+	{
+		"id": 9,
+		"channel_username": "soft_skillz",
+		"channel_title": "Soft Skillz"
+	},
+	{
+		"id": 10,
+		"channel_username": "neuro_channel",
+		"channel_title": "Нейроканал"
+	},
+	{
+		"id": 11,
+		"channel_username": "a_cup_of_java",
+		"channel_title": "Чашечка Java"
+	},
+	{
+		"id": 12,
+		"channel_username": "prog_stuff",
+		"channel_title": "Сохранёнки программиста"
+	},
+	{
+		"id": 13,
+		"channel_username": "quiz_python",
+		"channel_title": "Python: задачки и вопросы"
+	},
+	{
+		"id": 14,
+		"channel_username": "prog_tools",
+		"channel_title": "Инструменты программиста"
+	},
+	{
+		"id": 15,
+		"channel_username": "devo_pes",
+		"channel_title": "DevOps для ДевоПсов"
+	},
+	{
+		"id": 16,
+		"channel_username": "typical_qa",
+		"channel_title": "Типичный QA"
+	},
+	{
+		"id": 17,
+		"channel_username": "go_in_action",
+		"channel_title": "Go in Action"
+	},
+	{
+		"id": 18,
+		"channel_username": "linux_n_linus",
+		"channel_title": "Linux и Линус"
+	},
+	{
+		"id": 19,
+		"channel_username": "big_data_analysis",
+		"channel_title": "Data Analysis / Big Data"
+	},
+	{
+		"id": 20,
+		"channel_username": "database_design",
+		"channel_title": "DATABASE DESIGN"
+	},
+	{
+		"id": 21,
+		"channel_username": "django_prog",
+		"channel_title": "Django Unleashed Framework"
+	},
+	{
+		"id": 22,
+		"channel_username": "dot_net_c_sharp",
+		"channel_title": ".NET / C#"
+	},
+	{
+		"id": 23,
+		"channel_username": "smlttech",
+		"channel_title": "✈️ SMLTECH"
+	},
+	{
+		"id": 24,
+		"channel_username": "how_to_spend",
+		"channel_title": "Take my money"
+	},
+	{
+		"id": 25,
+		"channel_username": "devs_books",
+		"channel_title": "Метод утенка"
+	},
+	{
+		"id": 26,
+		"channel_username": "notnewsgpt",
+		"channel_title": "NewsGPT"
+	},
+	{
+		"id": 27,
+		"channel_username": "memesbackup",
+		"channel_title": "Memes Backup"
+	},
+	{
+		"id": 28,
+		"domain": "tproger",
+		"owner_id": 30666517,
+		"channel_title": "ВК: Типичный программист"
+	},
+	{
+		"id": 29,
+		"domain": "tnull",
+		"owner_id": 72495085,
+		"channel_title": "ВК: /dev/null"
+	},
+	{
+		"id": 29,
+		"domain": "tproger_web",
+		"owner_id": 183460226,
+		"channel_title": "ВК: Веб-страница"
+	}
+]

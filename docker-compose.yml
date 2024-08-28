@@ -1,0 +1,14 @@
+version: '3.1'
+
+volumes:
+  pg_project:
+
+services:
+  tg_stat_bot:
+    # FOR LOCAL DEPLOY only
+    build: .
+    #image: cr.yandex/crpgemqt7be790h22fj9/tg_stat_bot:latest
+    container_name: tg_stat_bot
+    env_file:
+      - .env
+    restart: always
